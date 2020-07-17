@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="container">
+
+    <div>
+      <h1>LOLCAT CLOCK</h1>
+    </div>
+
+    <div>
+      <h3>I CAN HAZ TIME??</h3>
+    </div>
+
+    <div>
+      <h2 id="displayClock"></h2>
+    </div>
+
+    <div>
+      <img src="./images/lolcat.jpg" alt="">
+    </div>
+
+
+
+    <div>
+      <form>
+        <label for="wakeUpTime">SET WAKE UP TIME</label>
+        <select name="wakeUpTime" id="wakeUp">
+          <option value="8 AM - 9 AM">8 AM - 9 AM</option>
+        </select>
+      </form>
+      <form>
+        <label for="setLunchTime">SET LUNCH TIME</label>
+        <select name="setLunchTime" id="lunchTime">
+          <option value="12 PM - 1 PM">12 PM - 1 PM</option>
+        </select>
+      </form>
+      <form>
+        <label for="setNapTime">SET NAP TIME</label>
+        <select name="setNapTime" id="napTime">
+          <option value="3 PM - 4 PM">3 PM - 4 PM</option>
+        </select>
+      </form>
+
+    </div>
+
+  </div>
+
+  <div>
+    <h3 id="partyTime">"HANG UP YOUR HARD HAT! ITS'S TIME TO PARTY"</h3>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
