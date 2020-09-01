@@ -56,6 +56,7 @@ const App = () => {
   const [ newSearch, setNewSearch] = useState('')
   const [ showAll, setShowAll ] = useState(undefined);
   const [responseMessage, setResponseMessage] = useState('');
+  const [ nameOfClass, setnameOfClass] = useState('');
 
   const hook = () => {
     personService
@@ -108,9 +109,11 @@ const App = () => {
         .create(newInfo)
         .then(response => {
           setPersons(persons.concat(response.data))
+          setnameOfClass('response')
           setResponseMessage(`${response.data.name} added`)
           setTimeout(() => {
             setResponseMessage('')
+            setnameOfClass('')
           }, 5000)
           setNewName('')
           setNewNumber('')
@@ -140,6 +143,15 @@ const App = () => {
           
           setNewName('')
           setNewNumber('')
+        })
+        .catch(error => {
+          setResponseMessage(`${person.name} has ben deleted!`)
+          setnameOfClass('error')
+          setTimeout(() => {
+            setResponseMessage('')
+            setnameOfClass('')
+          }, 5000)
+          
         })
     } else
     
@@ -200,7 +212,7 @@ const App = () => {
   return (
     <div>
 
-      <div className="response" >{responseMessage}</div>
+      <div className={nameOfClass} >{responseMessage}</div>
 
       <h1>Phonebook</h1>
 
