@@ -145,8 +145,8 @@ const App = () => {
           setNewNumber('')
         })
         .catch(error => {
-          setResponseMessage(`${person.name} has ben deleted!`)
           setnameOfClass('error')
+          setResponseMessage(`${person.name} has been deleted!`)
           setTimeout(() => {
             setResponseMessage('')
             setnameOfClass('')
@@ -212,7 +212,7 @@ const App = () => {
   return (
     <div>
 
-      <div className={nameOfClass} >{responseMessage}</div>
+      <div className={nameOfClass}>{responseMessage}</div>
 
       <h1>Phonebook</h1>
 
