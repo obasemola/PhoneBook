@@ -137,7 +137,7 @@ const App = () => {
 
     const foundNumber = persons.findIndex(person => person.number === newNumber);
 
-    if( foundName === -1 && foundNumber === -1){
+    if( foundName === -1 && foundNumber === -1 && newNumber){
 
       const newInfo = {
         name: makeFirstCharactersUppercase(newName),
@@ -150,6 +150,7 @@ const App = () => {
     } else if (foundName > -1 && persons[foundName].number !== newNumber) {
 
       if (window.confirm(`${persons[foundName].name} is already added to phonebook, replace the old number with a new one?`)) {
+        console.log(persons[foundName].name)
         const person = persons[foundName];
         const id = persons[foundName].id;
         const updatedPerson = {
@@ -163,9 +164,11 @@ const App = () => {
         setNewNumber('')
       }
       
-    } else
-    
-    {
+    } else if (newName && !newNumber ) {
+      alert('Add new number')
+      setNewName('')
+
+    } else if ( foundName && foundNumber ) {
       alert(`${newName} is already added to phonebook`)
       setNewName('')
       setNewNumber('')
