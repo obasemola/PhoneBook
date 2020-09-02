@@ -131,14 +131,16 @@ const App = () => {
 
       personService
         .update(id, updatedPerson)
-        .then(returnedPerson => {
+        .then(response => {
           setPersons(persons.map((person) => {
-            return person.id ? person : returnedPerson;
+            return person.id === id ? response.data : person;
           }))
 
+        setnameOfClass('response')
         setResponseMessage(`${person.name}'s number changed!`)
         setTimeout(() => {
           setResponseMessage('')
+          setnameOfClass('')
         }, 5000)
           
           setNewName('')
