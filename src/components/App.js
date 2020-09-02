@@ -64,14 +64,16 @@ const App = () => {
       .then(response => {
       setPersons(response.data)
     })
-  }
+  };
 
-  useEffect(hook, [])
+  useEffect(hook, []);
+
 
   const handleNameChange = (e) => {
     setNewName(e.target.value);
     
   };
+
 
   const makeFirstCharactersUppercase = (entry) => {
     return entry
@@ -82,6 +84,7 @@ const App = () => {
       .join(' ')
   };
 
+
   const hideNotification = () => {
     return setTimeout(() => {
             setResponseMessage('')
@@ -89,8 +92,45 @@ const App = () => {
           }, 5000)
   };
 
-  const updateInfo = (e) => {
 
+  const updatePhoneNumber = (id, updatedPerson, person) => {
+
+    return personService
+    .update(id, updatedPerson)
+    .then(response => {
+      setPersons(persons.map(person => person.id === id ? response.data : person));
+
+    setnameOfClass('response')
+    setResponseMessage(`${person.name}'s number changed!`)
+    hideNotification();
+    setNewName('')
+    setNewNumber('')
+    })
+    .catch(error => {
+
+      setnameOfClass('error')
+      setResponseMessage(`${person.name} has been deleted!`)
+      hideNotification();
+      
+    })
+  };
+
+
+  const createNewEntry = (newInfo) => {
+    return personService
+            .create(newInfo)
+            .then(response => {
+              setPersons(persons.concat(response.data))
+              setnameOfClass('response')
+              setResponseMessage(`${response.data.name} added`)
+              hideNotification();
+              setNewName('')
+              setNewNumber('')
+            })
+  };
+
+
+  const updateInfo = (e) => {
     e.preventDefault();
 
     const foundName = persons.findIndex(person => person.name === makeFirstCharactersUppercase(newName));
@@ -104,45 +144,25 @@ const App = () => {
         number: newNumber
         };
 
-      personService
-        .create(newInfo)
-        .then(response => {
-          setPersons(persons.concat(response.data))
-          setnameOfClass('response')
-          setResponseMessage(`${response.data.name} added`)
-          hideNotification();
-          setNewName('')
-          setNewNumber('')
-          const some = response.data;
-          return some
-        })
+      createNewEntry(newInfo);
 
 
     } else if (foundName > -1 && persons[foundName].number !== newNumber) {
-      const person = persons[foundName];
-      const id = persons[foundName].id;
-      const updatedPerson = {
-        ...person, number: newNumber
+
+      if (window.confirm(`${persons[foundName].name} is already added to phonebook, replace the old number with a new one?`)) {
+        const person = persons[foundName];
+        const id = persons[foundName].id;
+        const updatedPerson = {
+          ...person, number: newNumber
+        }
+
+        updatePhoneNumber(id, updatedPerson, person);
+
+      } else {
+        setNewName('')
+        setNewNumber('')
       }
-
-      personService
-        .update(id, updatedPerson)
-        .then(response => {
-          setPersons(persons.map(person => person.id === id ? response.data : person));
-
-        setnameOfClass('response')
-        setResponseMessage(`${person.name}'s number changed!`)
-        hideNotification();
-          
-          setNewName('')
-          setNewNumber('')
-        })
-        .catch(error => {
-          setnameOfClass('error')
-          setResponseMessage(`${person.name} has been deleted!`)
-          hideNotification();
-          
-        })
+      
     } else
     
     {
@@ -151,6 +171,7 @@ const App = () => {
       setNewNumber('')
     }; 
   };
+
 
   const handleNumberChange = (e) => {
     const typed = e.target.value;
@@ -171,7 +192,9 @@ const App = () => {
 
   };
 
+
   const infoToShow = foundPerson ? persons.filter(person => person.name.includes(makeFirstCharactersUppercase(newSearch)) || person.name.includes(newSearch)) : persons;
+
 
   const removePerson = (id, name) => {
     if (window.confirm(`Delete ${name}?`)) {
