@@ -54,7 +54,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('');
   const [ newNumber, setNewNumber ] = useState('');
   const [ newSearch, setNewSearch] = useState('')
-  const [ showAll, setShowAll ] = useState(undefined);
+  const [ foundPerson, setFoundPerson ] = useState(undefined);
   const [responseMessage, setResponseMessage] = useState('');
   const [ nameOfClass, setnameOfClass] = useState('');
 
@@ -73,35 +73,34 @@ const App = () => {
     
   };
 
+  const makeFirstCharactersUppercase = (entry) => {
+    return entry
+      .split(' ')
+      .map(s => s.charAt(0)
+      .toUpperCase() + s
+      .substr(1))
+      .join(' ')
+  };
+
+  const hideNotification = () => {
+    return setTimeout(() => {
+            setResponseMessage('')
+            setnameOfClass('')
+          }, 5000)
+  };
+
   const updateInfo = (e) => {
 
     e.preventDefault();
 
-    const foundName =
-      persons
-        .findIndex(person => person
-          .name === newName
-          .split(' ')
-          .map(s => s.charAt(0)
-          .toUpperCase() + s
-          .substr(1))
-          .join(' '));
+    const foundName = persons.findIndex(person => person.name === makeFirstCharactersUppercase(newName));
 
-    const foundNumber =
-      persons
-        .findIndex(person => person
-          .number === newNumber);
+    const foundNumber = persons.findIndex(person => person.number === newNumber);
 
     if( foundName === -1 && foundNumber === -1){
 
       const newInfo = {
-        name: newName
-        .split(' ')
-        .map(s => s
-          .charAt(0)
-          .toUpperCase() + s
-          .substr(1))
-          .join(' '),
+        name: makeFirstCharactersUppercase(newName),
         number: newNumber
         };
 
@@ -111,10 +110,7 @@ const App = () => {
           setPersons(persons.concat(response.data))
           setnameOfClass('response')
           setResponseMessage(`${response.data.name} added`)
-          setTimeout(() => {
-            setResponseMessage('')
-            setnameOfClass('')
-          }, 5000)
+          hideNotification();
           setNewName('')
           setNewNumber('')
           const some = response.data;
@@ -132,16 +128,11 @@ const App = () => {
       personService
         .update(id, updatedPerson)
         .then(response => {
-          setPersons(persons.map((person) => {
-            return person.id === id ? response.data : person;
-          }))
+          setPersons(persons.map(person => person.id === id ? response.data : person));
 
         setnameOfClass('response')
         setResponseMessage(`${person.name}'s number changed!`)
-        setTimeout(() => {
-          setResponseMessage('')
-          setnameOfClass('')
-        }, 5000)
+        hideNotification();
           
           setNewName('')
           setNewNumber('')
@@ -149,16 +140,12 @@ const App = () => {
         .catch(error => {
           setnameOfClass('error')
           setResponseMessage(`${person.name} has been deleted!`)
-          setTimeout(() => {
-            setResponseMessage('')
-            setnameOfClass('')
-          }, 5000)
+          hideNotification();
           
         })
     } else
     
     {
-      console.log(persons[foundName])
       alert(`${newName} is already added to phonebook`)
       setNewName('')
       setNewNumber('')
@@ -166,43 +153,32 @@ const App = () => {
   };
 
   const handleNumberChange = (e) => {
-    setNewNumber(e.target.value)
+    const typed = e.target.value;
+    setNewNumber(typed)
   };
 
 
   const handleFilter = (e) => {
-    setNewSearch(e.target.value)
+    const typed = e.target.value;
+    setNewSearch(typed)
 
     const found = 
-    persons
-      .findIndex(person => person
-        .name
-        .includes(newSearch
-          .split(' ')
-          .map(s => s
-            .charAt(0)
-            .toUpperCase() + s
-            .substr(1))
-            .join(' ')));
+    persons.findIndex(person => person.name.includes(makeFirstCharactersUppercase(newSearch)));
 
-    if(found === -1) {
-      setShowAll(false)
-    } else {
-      setShowAll(true)
-    }
+
+    const result = found !== -1;
+    setFoundPerson(result)
 
   };
 
-  const infoToShow = showAll ? persons.filter(person => person.name.includes(newSearch.split(' ').map(s => s.charAt(0).toUpperCase() + s.substr(1)).join(' ')) || person.name.includes(newSearch)) : persons;
+  const infoToShow = foundPerson ? persons.filter(person => person.name.includes(makeFirstCharactersUppercase(newSearch)) || person.name.includes(newSearch)) : persons;
 
   const removePerson = (id, name) => {
     if (window.confirm(`Delete ${name}?`)) {
       personService
       .remove(id)
       .then(response => {
-        setPersons(persons.filter((person) => {
-          return person.id !== id
-        }))
+        setPersons(persons.filter(person => person.id !== id))
       })
     } else {
       return;
