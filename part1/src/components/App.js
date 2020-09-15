@@ -130,7 +130,7 @@ useEffect(() => {
             })
             .catch( error => {
               setnameOfClass('error')
-              setResponseMessage(error)
+              setResponseMessage(error.response.data.error)
               hideNotification();
               setNewName('')
               setNewNumber('')
