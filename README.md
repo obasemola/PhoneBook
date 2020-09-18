@@ -1,4 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8525f2290cb3c2147e23a3f11eb011dbc9d17c27
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -68,11 +72,16 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 =======
+<<<<<<< HEAD
 # Country-statistics-and-weather-page
+=======
+PhoneBook
+>>>>>>> 8525f2290cb3c2147e23a3f11eb011dbc9d17c27
 React and API practice
 This app functionality was built entirely in react.
 This is a task for practice and every change and step made to the project was initially updated here: https://github.com/obasemola/Deep-Dive-Into-Modern-Web-Development
 The project was built with React.
+<<<<<<< HEAD
 The idea is to first render a search input field.
 Whenever the value of the input field changes (onChange), an API call is made to restcountries.eu to get some statistics.
 The change made in the input field is supposed to be the country for which the user needs statistics and weather report.
@@ -84,3 +93,12 @@ If there is only one country that fulfils this search parameter, then the code w
   1. It will render more detailed statictics about the country.
   2. It will make another API call to weatherstack API and update the page to also show some weather information about the country in question (in addition to the country statistics).
 >>>>>>> 85cd5706d77b6b963904576febb5a1f0b22fe6b0
+=======
+# Blog-list-application
+Created with node, the application allows users to save information about blogs they found interesting on the internet
+>>>>>>> 33f9fa48f596b4f5d32bd627821f0ab46f5fa295
+=======
+The idea is to create a phone book that takes name and number and add the data to a json server.
+It also displays the data in the db and has a search functionality.
+All interactions with the server is done using axios.
+>>>>>>> 8525f2290cb3c2147e23a3f11eb011dbc9d17c27
