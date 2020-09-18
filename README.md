@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -84,3 +85,7 @@ If there is only one country that fulfils this search parameter, then the code w
   1. It will render more detailed statictics about the country.
   2. It will make another API call to weatherstack API and update the page to also show some weather information about the country in question (in addition to the country statistics).
 >>>>>>> 85cd5706d77b6b963904576febb5a1f0b22fe6b0
+=======
+# Blog-list-application
+Created with node, the application allows users to save information about blogs they found interesting on the internet
+>>>>>>> 33f9fa48f596b4f5d32bd627821f0ab46f5fa295
