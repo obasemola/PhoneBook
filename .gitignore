@@ -1,3 +1,10 @@
+<<<<<<< HEAD
 .env
 node_modules/
 build/
+=======
+node_modules/
+db.json
+build/
+.env
+>>>>>>> 8525f2290cb3c2147e23a3f11eb011dbc9d17c27
