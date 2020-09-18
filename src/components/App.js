@@ -105,14 +105,15 @@ const App = () => {
   const [responseMessage, setResponseMessage] = useState('');
   const [ nameOfClass, setnameOfClass] = useState('');
 
-
-  useEffect(() => {
+  const hook = () => {
     personService
-    .getAll()
-    .then(response => {
-    setPersons(response.data)
-  })
-  }, []);
+      .getAll()
+      .then(response => {
+      setPersons(response.data)
+    })
+  };
+
+  useEffect(hook, []);
 
 
   const handleNameChange = (e) => {
@@ -250,7 +251,7 @@ const App = () => {
     if( foundName === -1 && foundNumber === -1 && newNumber){
 
       const newInfo = {
-        name: makeFirstCharactersUppercase(newName).replace(/ {2,}/g, ' '),
+        name: makeFirstCharactersUppercase(newName),
         number: newNumber
         };
 
@@ -259,7 +260,7 @@ const App = () => {
 
     } else if (foundName > -1 && persons[foundName].number !== newNumber) {
 
-      if (window.confirm(newNumber && `${persons[foundName].name} is already added to phonebook, replace the old number with a new one?`)) {
+      if (window.confirm(`${persons[foundName].name} is already added to phonebook, replace the old number with a new one?`)) {
         console.log(persons[foundName].name)
         const person = persons[foundName];
         const id = persons[foundName].id;
@@ -297,7 +298,7 @@ const App = () => {
     setNewSearch(typed)
 
     const found = 
-    persons.findIndex(person => person.name.toLowerCase().includes(newSearch.toLowerCase().replace(/ {2,}/g, ' ')));
+    persons.findIndex(person => person.name.includes(makeFirstCharactersUppercase(newSearch)));
 
 
     const result = found !== -1;
@@ -306,7 +307,7 @@ const App = () => {
   };
 
 
-  const infoToShow = foundPerson ? persons.filter(person => person.name.toLowerCase().includes(newSearch.toLowerCase().replace(/ {2,}/g, ' ')) ) : persons;
+  const infoToShow = foundPerson ? persons.filter(person => person.name.includes(makeFirstCharactersUppercase(newSearch)) || person.name.includes(newSearch)) : persons;
 
 
   const removePerson = (id, name) => {
